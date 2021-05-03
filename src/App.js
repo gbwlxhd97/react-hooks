@@ -1,47 +1,36 @@
 import React, { useState } from "react";
 
+const useInput = (initialValue, validator, validator2) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let willUpdate = true;
+
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (typeof validator2 === "function") {
+      willUpdate = validator2(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+
 const App = () => {
-  const [item, setItem] = useState(1);
-  const IncrementItem = () => setItem(item + 1);
-  const decrementItem = () => setItem(item - 1);
+  const maxLen = (value) => value.length <= 10;
+  const not골뱅이 = (value) => !value.includes("@");
+  const name = useInput("Lee", maxLen, not골뱅이);
   return (
     <div className="App">
-      <h1>{item}</h1>
-      <button onClick={IncrementItem}>Increse</button>
-      <button onClick={decrementItem}>Decrese</button>
+      <h1>Hello</h1>
+      <input placeholder="Name" {...name} />
     </div>
   );
 };
-// class 형 컴포넌트로 똑같은 기능을 구현할떄 state 관리.
-// eslint-disable-next-line
-class AppUgly extends React.Component {
-  state = {
-    item: 1,
-  };
-  render() {
-    const { item } = this.state;
-    return (
-      <div className="App">
-        <h1>{item}</h1>
-        <button onClick={this.IncrementItem}>Increse</button>
-        <button onClick={this.decrementItem}>Decrese</button>
-      </div>
-    );
-  }
-  IncrementItem = () => {
-    this.setState((state) => {
-      return {
-        item: state.item + 1,
-      };
-    });
-  };
-  decrementItem = () => {
-    this.setState((state) => {
-      return {
-        item: state.item - 1,
-      };
-    });
-  };
-}
 
 export default App;

@@ -3,8 +3,8 @@
 ## react hooks를 학습하며 NPM 라이브러리에 등록하는 과정까지 학습.
 
 - [O] useState - Hooks를 호출하여 함수 컴포넌트에 state 변수를 선언할 수 있는 함수
+- [O] useInput - just Input 역할
 - [ ] useTitle - react document의 title을 몇개의 hooks와 함께 바꾸는것
-- [ ] useInput - just Input 역할
 - [ ] usePageLeave - 유저가 page를 벗어나는 시점을 발견하고 함수를 실행하기
 - [ ] useClick - 누군가 element를 클릭하는 시점을 발견하기
 - [ ] useFadeIn - 어떤 Element든 상관없이 에니메이션을 Element 안으로 서서히 사라지게 만들기
