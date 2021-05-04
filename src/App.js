@@ -1,41 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const content = [
-  {
-    tab: "Section 1",
-    content: "I`m the content of the Section 1",
-  },
-  {
-    tab: "Section 2",
-    content: "I`m the content of the Section 2",
-  },
-];
-
-const useTabs = (initialTab, allTabs) => {
-  const [currentIndex, setCurrentIndex] = useState(initialTab);
-  if (!allTabs || !Array.isArray(allTabs)) {
-    return; //allTabs가 false 일때, 배열이 아닐 때 리턴 == 에러핸들링같음
-  }
-  return {
-    currentItem: allTabs[currentIndex],
-    changeItem: setCurrentIndex,
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title; //4번라인 title로 받은값으로 변환
   };
+  useEffect(updateTitle, [title]);
+  return setTitle;
 };
-
+//initialTitle은 Loading...으로 값 변경
 const App = () => {
-  const { currentItem, changeItem } = useTabs(0, content);
+  const titleUpdator = useTitle("Loading ..."); //title Updator는 setTitle과 동일함
+  setTimeout(() => titleUpdator("home"), 5000);
   return (
     <div className="App">
-      {content.map((currentItem, index) => (
-        <button
-          onClick={() => {
-            changeItem(index);
-          }}
-        >
-          {currentItem.tab}
-        </button>
-      ))}
-      <div>{currentItem.content}</div>
+      <h1>하이</h1>
     </div>
   );
 };
