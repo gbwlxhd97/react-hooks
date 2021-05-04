@@ -1,34 +1,41 @@
 import React, { useState } from "react";
 
-const useInput = (initialValue, validator, validator2) => {
-  const [value, setValue] = useState(initialValue);
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    let willUpdate = true;
+const content = [
+  {
+    tab: "Section 1",
+    content: "I`m the content of the Section 1",
+  },
+  {
+    tab: "Section 2",
+    content: "I`m the content of the Section 2",
+  },
+];
 
-    if (typeof validator === "function") {
-      willUpdate = validator(value);
-    }
-    if (typeof validator2 === "function") {
-      willUpdate = validator2(value);
-    }
-    if (willUpdate) {
-      setValue(value);
-    }
+const useTabs = (initialTab, allTabs) => {
+  const [currentIndex, setCurrentIndex] = useState(initialTab);
+  if (!allTabs || !Array.isArray(allTabs)) {
+    return; //allTabs가 false 일때, 배열이 아닐 때 리턴 == 에러핸들링같음
+  }
+  return {
+    currentItem: allTabs[currentIndex],
+    changeItem: setCurrentIndex,
   };
-  return { value, onChange };
 };
 
 const App = () => {
-  const maxLen = (value) => value.length <= 10;
-  const not골뱅이 = (value) => !value.includes("@");
-  const name = useInput("Lee", maxLen, not골뱅이);
+  const { currentItem, changeItem } = useTabs(0, content);
   return (
     <div className="App">
-      <h1>Hello</h1>
-      <input placeholder="Name" {...name} />
+      {content.map((currentItem, index) => (
+        <button
+          onClick={() => {
+            changeItem(index);
+          }}
+        >
+          {currentItem.tab}
+        </button>
+      ))}
+      <div>{currentItem.content}</div>
     </div>
   );
 };
