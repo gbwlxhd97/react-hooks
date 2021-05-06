@@ -1,30 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useFadeIn = (duration = 1, delay = 0) => {
-  const element = useRef();
-
-  //해당 element 안에 나타나기 위해서 useEffect 사용
+const useNetwork = (onChange) => {
+  const [status, setStatus] = useState(navigator.onLine);
+  const handleChange = () => {
+    if (typeof onChange === "function") {
+      onChange(navigator.onLine);
+    }
+    setStatus(navigator.onLine);
+  };
   useEffect(() => {
-    if (typeof duration !== "number" || typeof delay !== "number") {
-      return;
-    }
-    if (element.current) {
-      const { current } = element;
-      current.style.opacity = 1;
-      current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;
-    }
-  }, [duration, delay]);
-
-  return { ref: element, style: { opacity: 0 } };
+    window.addEventListener("online", handleChange);
+    window.addEventListener("offline", handleChange);
+    return () => {
+      //Unmount 일때
+      window.removeEventListener("online", handleChange);
+      window.removeEventListener("offline", handleChange);
+    };
+  }, []);
+  return status;
 };
 
 const App = () => {
-  const fadeInH1 = useFadeIn(1, 2);
-  const fadeInP = useFadeIn(4, 4);
+  const handleNetworkChange = (online) => {
+    console.log(online ? "online!" : "offline!");
+  };
+  const onLine = useNetwork(handleNetworkChange);
   return (
     <div className="App">
-      <h1 {...fadeInH1}>하이</h1>
-      <p {...fadeInP}>lorem itsum 벽력일섬</p>
+      <h1>{onLine ? "Online" : "Offline"}</h1>
     </div>
   );
 };

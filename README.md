@@ -11,7 +11,7 @@
 - [O] usePreventLeave - 유저가 변경사항이나 무엇이든간에 저장하지 않고 페이지를 벗어나길 원할때 확인을 하는것 다만 이것도 hooks말고 단순 함수형 프로그래밍임.
 - [O] useBeforeLeave - 유저가 page를 벗어나는 시점을 발견하고 함수를 실행하기
 - [O] useFadeIn - 어떤 Element든 상관없이 에니메이션을 Element 안으로 서서히 사라지게 만들기
-- [ ] useNetwork - Online or Offline 상태 감지하기
+- [x] useNetwork - Online or Offline 상태 감지하기 --사용X
 - [ ] useFullscreen - 어떤 Element든 풀스크린으로 만들거나 일반 화면으로 돌아가게 할 수 있음
 - [ ] useHover - 어떤것에 마우스를 올렸을 때 감지하기
 - [ ] useNotification - notification API를 사용할때 유저에게 알림을 보내주기
