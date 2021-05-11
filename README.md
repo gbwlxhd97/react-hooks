@@ -14,6 +14,6 @@
 - [x] useNetwork - Online or Offline 상태 감지하기 --사용X
 - [O] useScroll - 스크롤을 사용할 때를 감지해 알려주기
 - [O] useFullscreen - 어떤 Element든 풀스크린으로 만들거나 일반 화면으로 돌아가게 할 수 있음
+- [O] useNotification - notification API를 사용할때 유저에게 알림을 보내주기
 - [ ] useHover - 어떤것에 마우스를 올렸을 때 감지하기
-- [ ] useNotification - notification API를 사용할때 유저에게 알림을 보내주기
 - [ ] useAxios - HTTP request client axios 를 위한 wrapper

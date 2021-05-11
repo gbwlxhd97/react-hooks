@@ -1,56 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useFullscreen = (callback) => {
-  const element = useRef();
-  const runCb = (isFull) => {
-    if (callback && typeof callback === "function") {
-      callback(isFull);
+const useNotification = (title, options) => {
+  if (!("Notification" in window)) {
+    return;
+  }
+  const fireNotif = () => {
+    if (Notification.permission !== "granted") {
+      //허용의값임
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification(title, options);
+        } else {
+          return; //허용상태가아니라면 함수호출 x
+        }
+      });
+    } else {
+      new Notification(title, options);
     }
   };
-  const triggerFull = () => {
-    if (element.current) {
-      if (element.current.requestFullscreen) {
-        element.current.requestFullscreen();
-      } else if (element.current.mozRequestFullScreen) {
-        element.current.mozRequestFullScreen();
-      } else if (element.current.webkitRequestFullscreen) {
-        element.current.webkitRequestFullscreen();
-      } else if (element.current.msRequestFullscreen) {
-        element.current.msRequestFullscreen();
-      }
-      runCb(true); // APP 에서는 ture of false만 보내니까 callback 에서는 true만 보내서 full스크린 해줌
-    }
-  };
-  const exitFull = () => {
-    document.exitFullscreen();
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-    runCb(false); // APP 에서는 ture of false만 보내니까 callback 에서는 false만 보내서 full스크린을 해제 해줌
-  };
-  return { element, triggerFull, exitFull };
+  return fireNotif;
 };
-
 const App = () => {
-  const onFulls = (isFull) => {
-    //콜백 함수생성
-    console.log(isFull ? "we are full" : "we are small");
-  };
-  const { element, triggerFull, exitFull } = useFullscreen(onFulls);
-  console.log(element);
+  const triggerNotif = useNotification("하잉");
   return (
     <div className="App">
-      <div ref={element}>
-        <img src="https://picsum.photos/200/" alt="random" />
-        <button onClick={triggerFull}>Image full</button>
-        <button onClick={exitFull}>Image not full</button>
-      </div>
+      <h1>hi</h1>
+      <button onClick={triggerNotif}></button>
     </div>
   );
 };
